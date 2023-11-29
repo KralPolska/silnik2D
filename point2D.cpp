@@ -9,18 +9,18 @@ point2D::point2D(sf::Vector2f position)
 	point = position;
 }
 
-point2D::point2D(unsigned int x, unsigned int y)
+point2D::point2D(float x, float y)
 {
 	point.x = x;
 	point.y = y;
 }
 
-int point2D::getX()
+float point2D::getX()
 {
 	return point.x;
 }
 
-int point2D::getY()
+ float point2D::getY()
 {
 	return point.y;
 }
@@ -35,12 +35,12 @@ void point2D::setPosition(sf::Vector2f position)
 	point = position;
 }
 
-void point2D::setX(unsigned int x)
+void point2D::setX(float x)
 {
 	point.x = x;
 }
 
-void point2D::setY(unsigned int y)
+void point2D::setY(float y)
 {
 	point.y = y;
 }

@@ -9,15 +9,15 @@ private:
 public:
 	point2D();
 	point2D(sf::Vector2f position);
-	point2D(unsigned int x, unsigned int y);
+	point2D(float x, float y);
 
-	int getX();
-	int getY();
+	float getX();
+	float getY();
 	sf::Vector2f getPosition();
 
 	void setPosition(sf::Vector2f position);
-	void setX(unsigned int x);
-	void setY(unsigned int y);
+	void setX(float x);
+	void setY(float y);
 
 };
 

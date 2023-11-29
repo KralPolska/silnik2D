@@ -11,19 +11,23 @@ void engine::init()
 	this->window = nullptr;
 }
 
-void engine::initWindow()
+void engine::initWindow(float height, float width, bool fullscreen, std::string title)
 {
-	this->videoMode.height = 600;
-	this->videoMode.width = 800;
+	this->videoMode.height = height;
+	this->videoMode.width = width;
 
-	this->window = new sf::RenderWindow(this->videoMode, "Silnik", sf::Style::Titlebar | sf::Style::Close);
+	if (fullscreen)
+		this->window = new sf::RenderWindow(this->videoMode, title, sf::Style::Titlebar | sf::Style::Close);
+	else
+		this->window = new sf::RenderWindow(this->videoMode, title, sf::Style::Titlebar | sf::Style::Close | sf::Style::Fullscreen);
+
 }
 
 //(de)Konstruktor
-engine::engine()
+engine::engine(float height, float width, bool fullscreen, std::string title)
 {
 	this->init();
-	this->initWindow();
+	this->initWindow(height,width,fullscreen,title);
 }
 
 engine::~engine()
@@ -35,40 +39,6 @@ engine::~engine()
 const bool engine::gameRunning()
 {
 	return (this->window->isOpen());
-}
-
-void engine::pollEvents()
-{
-	while (this->window->pollEvent(this->event))
-	{
-		if (this->event.type == sf::Event::Closed)
-			this->window->close();
-		//Klawiatura
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-			this->window->close();
-		
-
-		//mysz
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-			std::cout << "Lewy";
-
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-			std::cout << "Prawy";
-
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Middle))
-			std::cout << "Scroll";
-
-		if (this->event.type == sf::Event::MouseWheelScrolled)
-		{
-			if (this->event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
-				std::cout << "Scrolled";
-		}
-	}
-}
-
-void engine::update()
-{
-	this->pollEvents();
 }
 
 void engine::clearToColor(sf::Color color)
@@ -86,13 +56,12 @@ void engine::setFramerate(unsigned int framerate)
 	this->window->setFramerateLimit(framerate);
 }
 
-//Zegar
-void engine::startClock()
+bool engine::enginePaused()
 {
-	this->clock.restart();
+	return paused;
 }
 
-float engine::getClockTime()
+void engine::pause()
 {
-	return this->clock.getElapsedTime().asSeconds();
+	paused = !paused;
 }
