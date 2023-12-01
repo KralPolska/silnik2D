@@ -58,6 +58,10 @@ int main()
     T.setTexture(&floor);
     T.setColor(sf::Color::Magenta);
 
+    primitive_rectangle Rr(*engine.window);
+    Rr.setColor(sf::Color::Red);
+    Rr.setPosition(500);
+    Rr.setSize({ 100,100 });
     //primitive_line L(*engine.window);
     //L.setPosition({ 300,300 }, { 350,350 });
 
@@ -185,9 +189,11 @@ int main()
 
         C.draw();
         T.draw();
+        //T.scale(2);
         T.rotate(100,dt);
         S.draw();
         R.draw();
+        Rr.drawFilledRectangle(sf::Color::White, 10);
         
         //engine.window->draw(circle);
         engine.render();

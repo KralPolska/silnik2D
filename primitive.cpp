@@ -197,7 +197,7 @@ void primitive_rectangle::rotate(float angle)
 	rectangle.rotate(angle);
 }
 
-float primitive_rectangle::getRotaion()
+float primitive_rectangle::getRotation()
 {
 	return rectangle.getRotation();
 }
@@ -897,14 +897,28 @@ void primitive_line::drawLine(sf::Color color)
 	window.draw(line,2,sf::Lines);
 }
 
+void primitive_line::drawThickLine(sf::Color color, unsigned int thickness)
+{
+	sf::Vertex temp[2];
+	temp[0].position = line[0].position;
+	temp[1].position = line[1].position;
+	temp[0].color = color;
+	temp[1].color = color;
+
+	line[0].color = color;
+	line[1].color = color;
+	for (int i = 1; i <= thickness; i++)
+	{
+		temp[0].position.x + 1;
+		temp[1].position.y + 1;
+		window.draw(temp, 2, sf::Lines);
+	}
+}
+
 void primitive_line::setPosition(sf::Vector2f point1, sf::Vector2f point2)
 {
 	line[0].position = point1;
 	line[1].position = point2;
-}
-
-void primitive_line::setThickness(unsigned int thickness)
-{
 }
 
 void primitive_line::translate(sf::Vector2f newPoint1, sf::Vector2f newPoint2)
@@ -929,10 +943,6 @@ void primitive_line::rotate(float angle, float dt)
 	line[1].position.x = x2 * cos(angle) - y2 * sin(angle);
 	line[1].position.y = x2 * sin(angle) + y2 * cos(angle);
 	std::printf("Linia %f %f, %f %f\n", line[0].position.x, line[0].position.y, line[1].position.x, line[1].position.y);
-}
-
-void primitive_line::scale(float scale)
-{
 }
 
 ////////////////////////////////////// Convex
@@ -975,6 +985,8 @@ void primitive_convex::setPoint(unsigned int index, float pointX, float pointY)
 
 void primitive_convex::setPointCount(unsigned int pointCount)
 {
+	if (pointCount < 4)
+		return;
 	convex.setPointCount(pointCount);
 }
 
@@ -1069,29 +1081,9 @@ void primitive_convex::setScale(sf::Vector2f scale)
 	convex.setScale(scale);
 }
 
-void primitive_convex::setScale(float scaleX, float scaleY)
-{
-	convex.setScale({ scaleX,scaleY });
-}
-
-void primitive_convex::setScale(float scale)
-{
-	convex.setScale({ scale,scale });
-}
-
 void primitive_convex::scale(sf::Vector2f scale)
 {
 	convex.scale(scale);
-}
-
-void primitive_convex::scale(float scaleX, float scaleY)
-{
-	convex.scale({ scaleX,scaleY });
-}
-
-void primitive_convex::scale(float scale)
-{
-	convex.scale({ scale,scale });
 }
 
 sf::Vector2f primitive_convex::getScale()
